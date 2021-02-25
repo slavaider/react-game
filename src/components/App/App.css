@@ -1,0 +1,21 @@
+.App {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+table {
+    border-spacing: 3px; /* Расстояние между ячеек */
+}
+
+thead th {
+    background: #e08156; /* Цвет фона заголовка */
+    color: #333; /* Цвет текста */
+}
+
+td, th {
+    background: #54ee29; /* Цвет фона ячеек */
+}
