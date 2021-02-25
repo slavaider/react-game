@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css'
 import Cell from "../Cell/Cell";
+import logo from '../../assets/img/rs_school_js.svg'
 
 class App extends React.Component {
 
@@ -109,13 +110,18 @@ class App extends React.Component {
         const settings = (
             <>
                 <div>{win}</div>
-                <button onClick={()=>this.Change()}>Restart</button>
+                <button onClick={() => this.Change()}>Restart</button>
             </>
         )
         return (
             <div className="App">
                 <div className="wrapper">
                     {winner === 'pass' ? table : settings}
+                </div>
+                <div className="github">
+                    <a href="https://github.com/slavaider">github</a>
+                    <img src={logo} alt="img"/>
+                    <a href="https://rs.school/js/">rs-school</a>
                 </div>
             </div>
         );
