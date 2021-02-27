@@ -16,7 +16,7 @@ function Cell(props) {
             <input
                 type={'button'}
                 style={style}
-                disabled={props.value !== 0}
+                disabled={props.value !== 0 || props.computer}
                 onClick={props.onClickHandler.bind(this, props.index)}
             >
             </input>

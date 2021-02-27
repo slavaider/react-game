@@ -1,40 +1,12 @@
-.App {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+button {
+    padding: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 30px;
 }
 
-table {
-    border-spacing: 3px; /* Расстояние между ячеек */
-}
-
-thead th {
-    background: #e08156; /* Цвет фона заголовка */
-    color: #333; /* Цвет текста */
-}
-
-td, th {
-    background: #54ee29; /* Цвет фона ячеек */
-}
-
-.github {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-a {
+button:hover {
+    transition: all 0.5s ease-in-out;
+    background-color: #ffffff !important;
     color: black;
-    text-decoration: none;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-img {
-    width: 100px;
-    height: 100px;
 }
