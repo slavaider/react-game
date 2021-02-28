@@ -1,10 +1,9 @@
 import React from 'react';
 import './Game.css'
 import Cell from "../Cell/Cell";
-import logo from '../../assets/img/rs_school_js.svg'
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux';
-import {addWin, resetLeaderBoard} from "../../store/actions";
+import {addWin, fetchDataFromStorage, fetchScore, resetLeaderBoard} from "../../store/actions";
 
 class Game extends React.Component {
 
@@ -55,6 +54,7 @@ class Game extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState !== this.state) {
+            localStorage.setItem('board', JSON.stringify(this.state.board));
             if (this.get_winner() !== 'pass' && this.get_winner() === 1) {
                 this.setState({winner: 1})
                 this.Restart()
@@ -67,6 +67,12 @@ class Game extends React.Component {
                 this.setState({winner: 'draw'})
                 this.Restart()
             }
+        }
+        if (prevProps.computer !== this.props.computer) {
+            this.setComputerInterval()
+        }
+        if (prevProps.score !== this.props.score) {
+            localStorage.setItem('score', JSON.stringify(this.props.score))
         }
     }
 
@@ -94,11 +100,20 @@ class Game extends React.Component {
                     randomIndex = Math.floor(Math.random() * 9);
                 } while (this.state.board[randomIndex] !== 0)
                 this.onClickHandler(randomIndex);
-            }, this.props.speed)
+            }, this.props.computerSpeed)
         }
     }
 
     componentDidMount() {
+        if (localStorage.getItem('score') !== null) {
+            this.props.fetchScore(JSON.parse(localStorage.getItem('score')));
+        }
+        if (localStorage.getItem('settings') !== null) {
+            this.props.fetchDataFromStorage(JSON.parse(localStorage.getItem('settings')))
+        }
+        if (localStorage.getItem('board') !== null) {
+            this.setState({board: JSON.parse(localStorage.getItem('board'))});
+        }
         if (!this.props.computer) {
             document.addEventListener("keydown", this.keydownHandler);
         }
@@ -107,6 +122,7 @@ class Game extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener("keydown", this.keydownHandler);
+        this.Restart()
         clearInterval(this.computer_interval)
     }
 
@@ -128,7 +144,7 @@ class Game extends React.Component {
     Restart = () => {
         document.removeEventListener("keydown", this.keydownHandler);
         this.computer_interval = clearInterval(this.computer_interval)
-        if (this.props.leaders.length > 9) {
+        if (this.props.score.length > 9) {
             this.props.resetLeaderBoard()
         }
         this.props.addWin({
@@ -218,11 +234,6 @@ class Game extends React.Component {
                 <main className="wrapper">
                     {winner === 'pass' ? table : result}
                 </main>
-                <footer className="github">
-                    <a href="https://github.com/slavaider">github</a>
-                    <img src={logo} alt="img"/>
-                    <a href="https://rs.school/js/">rs-school</a>
-                </footer>
             </div>
         );
     }
@@ -233,15 +244,17 @@ function mapStateToProps(state) {
         flag: state.game.flag,
         computer: state.game.computer,
         color: state.game.color,
-        leaders: state.game.score,
-        speed: state.game.computerSpeed
+        score: state.game.score,
+        computerSpeed: state.game.computerSpeed
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         addWin: (win) => dispatch(addWin(win)),
-        resetLeaderBoard: () => dispatch(resetLeaderBoard())
+        resetLeaderBoard: () => dispatch(resetLeaderBoard()),
+        fetchDataFromStorage: (data) => dispatch(fetchDataFromStorage(data)),
+        fetchScore: (data) => dispatch(fetchScore(data)),
     }
 }
 

@@ -10,3 +10,17 @@ button:hover {
     background-color: #ffffff !important;
     color: black;
 }
+
+footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

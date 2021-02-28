@@ -2,13 +2,20 @@ import React from 'react'
 import './Leaders.css'
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {fetchDataFromStorage, fetchScore} from "../../store/actions";
 
 class Leaders extends React.Component {
+    componentDidMount() {
+        if(localStorage.getItem('score')!==null){
+            this.props.fetchScore(JSON.parse(localStorage.getItem('score')));
+        }
+    }
+
     render() {
         return (
             <div className='Leaders' style={{background: this.props.color}}>
                 <ol>
-                    {this.props.leaders.length > 0 ? this.props.leaders.map((item, index) => {
+                    {this.props.score.length > 0 ? this.props.score.map((item, index) => {
                         return (
                             <li key={index}>
                                 {item.winner}&nbsp;
@@ -30,8 +37,15 @@ class Leaders extends React.Component {
 function mapStateToProps(state) {
     return {
         color: state.game.color,
-        leaders: state.game.score
+        score: state.game.score,
     }
 }
 
-export default connect(mapStateToProps, null)(Leaders)
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchDataFromStorage: (data) => dispatch(fetchDataFromStorage(data)),
+        fetchScore:(data)=>dispatch(fetchScore(data)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Leaders)

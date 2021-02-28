@@ -10,13 +10,10 @@
 
 table {
     border-spacing: 3px; /* Расстояние между ячеек */
+    margin-bottom: 30px;
 }
 
-.github {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+
 
 a {
     color: black;

@@ -2,11 +2,31 @@ import React from 'react'
 import './Settings.css'
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {changeBackground, changeSpeed, toggleComputer, toggleStart} from "../../store/actions";
+import {
+    changeBackground,
+    changeSpeed,
+    fetchDataFromStorage,
+    toggleComputer,
+    toggleStart
+} from "../../store/actions";
 
 class Settings extends React.Component {
-    ColorPicker = (event) => {
-        console.log(event.target.value);
+
+    componentDidMount() {
+        if (localStorage.getItem('settings') !== null) {
+            this.props.fetchDataFromStorage(JSON.parse(localStorage.getItem('settings')))
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps !== this.props) {
+            localStorage.setItem('settings', JSON.stringify({
+                computer: this.props.computer,
+                color: this.props.color,
+                flag: this.props.flag,
+                computerSpeed: +this.props.computerSpeed,
+            }))
+        }
     }
 
     render() {
@@ -85,7 +105,8 @@ function mapDispatchToProps(dispatch) {
         toggleComputer: () => dispatch(toggleComputer()),
         changeBackground: (event) => dispatch(changeBackground(event.target.value)),
         toggleStart: () => dispatch(toggleStart()),
-        changeSpeed: (event) => dispatch(changeSpeed(event.target.value)),
+        changeSpeed: (event) => dispatch(changeSpeed(+event.target.value)),
+        fetchDataFromStorage: (data) => dispatch(fetchDataFromStorage(data))
     }
 }
 

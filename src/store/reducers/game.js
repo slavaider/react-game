@@ -33,6 +33,21 @@ export default function Game(state = initialState, action) {
         case 'CHANGE_BACKGROUND': {
             return {...state, color: action.value}
         }
+        case 'FETCH_DATA': {
+            return {
+                ...state,
+                computer: action.value.computer,
+                color: action.value.color,
+                flag: action.value.flag,
+                computerSpeed: action.value.computerSpeed
+            }
+        }
+        case 'FETCH_SCORE': {
+            return {
+                ...state,
+                score: action.value,
+            }
+        }
         default:
             return state
     }
