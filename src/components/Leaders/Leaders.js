@@ -9,6 +9,9 @@ class Leaders extends React.Component {
         if(localStorage.getItem('score')!==null){
             this.props.fetchScore(JSON.parse(localStorage.getItem('score')));
         }
+        if (localStorage.getItem('settings') !== null) {
+            this.props.fetchDataFromStorage(JSON.parse(localStorage.getItem('settings')))
+        }
     }
 
     render() {
