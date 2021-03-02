@@ -8,6 +8,17 @@ import logo from "../../assets/img/rs_school_js.svg";
 import music from '../../assets/music/03-b-type-music.mp3'
 
 const App = () => {
+    let flag = true
+    const FullToggle = () => {
+        if (flag) {
+            document.documentElement.requestFullscreen()
+            flag = !flag;
+        } else {
+            document.exitFullscreen()
+            flag = !flag;
+        }
+
+    }
     return (
         <div className="App">
             <header>
@@ -20,6 +31,7 @@ const App = () => {
                     Your browser does not support the
                     <code>audio</code> element.
                 </audio>
+                <button className={'screen'} onClick={() => FullToggle()}>&#9776; FULLSCREEN</button>
             </header>
             <Switch>
                 <Route path={'/'} exact component={Settings}/>

@@ -24,3 +24,8 @@ header {
     justify-content: center;
     align-items: center;
 }
+
+.screen {
+    font-size: 10px;
+    background-color: black;
+}
